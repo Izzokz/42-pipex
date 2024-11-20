@@ -13,8 +13,8 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "010_FT_PRINTF/ft_printf.h"
-# include "020_LIBFT/libft.h"
+# include "../010_FT_PRINTF/ft_printf.h"
+# include "../020_LIBFT/libft.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
