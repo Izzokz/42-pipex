@@ -33,27 +33,15 @@ static char	**ft_delete_line(int lineno, char ***chain, int len)
 int	ft_deline(const char *filename, int lineno)
 {
 	char	**lines;
-	int		fd;
-	int		i;
 	int		len;
 
-	if (lineno == 0)
-		return (0);
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("GNLXIO:ft_deline.c:42:open()");
+	lines = ft_readfile(filename);
+	if (!lines || !(lines[0]))
 		return (-1);
-	}
-	lines = ft_readlines(fd);
-	if (!lines)
-		return (-1);
-	i = -1;
 	len = ft_rlines_len(lines);
 	ft_fix_lineno(&lineno, len);
 	lines = ft_delete_line(lineno, &lines, len);
 	ft_rewrite_file(filename, lines);
-	close(fd);
 	ft_free_rlines(&lines);
 	return (1);
 }

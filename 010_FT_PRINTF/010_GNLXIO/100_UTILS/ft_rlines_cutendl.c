@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rewrite_file.c                                  :+:      :+:    :+:   */
+/*   ft_rlines_cutendl.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 13:10:09 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2024/11/16 13:25:41 by kzhen-cl         ###   ########.fr       */
+/*   Created: 2024/11/23 19:30:11 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2024/11/23 19:30:47 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../gnlxio.h"
 
-int	ft_rewrite_file(const char *filename, char **lines)
+void	ft_rlines_cutendl(char ***rlines)
 {
-	int	fd;
-	int	i;
+	t_ints	ints;
 
-	if (!filename)
-		return (-1);
-	fd = open(filename, O_WRONLY | O_TRUNC);
-	if (fd < 0)
+	if (!rlines || !(*rlines))
+		return ;
+	ints.i = -1;
+	while ((*rlines)[++(ints.i)])
 	{
-		perror("GNLXIO:ft_rewrite_file.c:29:open()");
-		return (-1);
+		ints.len = gnlxio_ft_strlen((*rlines)[ints.i]);
+		if (ints.len == 0)
+			;
+		else if ((*rlines)[ints.i][ints.len - 1] == '\n')
+			(*rlines)[ints.i][ints.len - 1] = '\0';
 	}
-	i = -1;
-	while (lines[++i])
-		gnlxio_ft_putstr_fd(lines[i], fd);
-	close(fd);
-	return (i);
 }

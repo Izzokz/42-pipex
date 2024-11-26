@@ -35,6 +35,8 @@ static int	do_write(t_params *pa)
 {
 	if (pa->str[pa->i] == '*')
 		return (ft_write_all(pa));
+	if (is_flag("f#", pa))
+		return (ft_write_file(pa));
 	if (is_flag("_0", pa))
 		return (ft_write_bool(va_arg(pa->args, int), 0, pa->fd));
 	if (is_flag("_1", pa))
@@ -80,7 +82,6 @@ int	ft_process(t_params *pa)
 			len += write(pa->fd, &(pa->str[pa->i]), 1);
 	}
 	va_end(pa->args);
-	free(pa);
 	if (err)
 		return (-1);
 	return (len);

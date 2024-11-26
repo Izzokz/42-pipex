@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 
 	data = NULL;
-	if (!ft_parse_args(argc, argv, &data))
+	if (argc != 5 || !ft_parse_args(argc, argv, &data))
 		return (-1);
 	ft_set_path(data, envp);
 	if (ft_process_fork(data, envp) == -1)

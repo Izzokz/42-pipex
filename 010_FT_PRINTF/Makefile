@@ -17,7 +17,8 @@ UTILSSRC = $(UTILDIR)ft_getbase.c \
 	$(UTILDIR)ft_pow.c
 WRITESRC = $(WRITEDIR)ft_write_d.c \
 	$(WRITEDIR)ft_write_s.c \
-	$(WRITEDIR)ft_write_b.c
+	$(WRITEDIR)ft_write_b.c \
+	$(WRITEDIR)ft_write_file.c
 ARRAYSRC = $(ARRAYDIR)ft_write_all.c \
 	$(ARRAYDIR)ft_process_all.c
 

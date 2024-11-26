@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rewrite_file.c                                  :+:      :+:    :+:   */
+/*   ft_readfile.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 13:10:09 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2024/11/16 13:25:41 by kzhen-cl         ###   ########.fr       */
+/*   Created: 2024/11/20 17:19:07 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2024/11/20 17:19:08 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../gnlxio.h"
 
-int	ft_rewrite_file(const char *filename, char **lines)
+char	**ft_readfile(const char *filename)
 {
-	int	fd;
-	int	i;
+	char	**lines;
+	int		fd;
 
-	if (!filename)
-		return (-1);
-	fd = open(filename, O_WRONLY | O_TRUNC);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("GNLXIO:ft_rewrite_file.c:29:open()");
-		return (-1);
+		perror("GNLXIO:ft_readfile.c:20:open()");
+		return (NULL);
 	}
-	i = -1;
-	while (lines[++i])
-		gnlxio_ft_putstr_fd(lines[i], fd);
+	lines = ft_readlines(fd);
 	close(fd);
-	return (i);
+	return (lines);
 }

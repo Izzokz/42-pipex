@@ -17,7 +17,7 @@ This function works like a converter from an alnum character
 to an integer if <type> == 'c', acts like isdigit if
 <type> == 'n' and acts like isalnum if <type> == 'a'
 */
-static int	ft_conv(const char type, const char c)
+int	ft_conv(const char type, const char c)
 {
 	int	conv;
 
@@ -91,6 +91,8 @@ static int	ft_getdec(const char *str, int base)
 	int				c_to_i;
 	int				weight;
 
+	if (!str)
+		return (0);
 	len = ft_strlen(str);
 	dec = 0;
 	weight = -1;

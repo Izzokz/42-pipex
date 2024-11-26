@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_process.c                                       :+:      :+:    :+:   */
+/*   ft_process_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:40:44 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2024/11/08 09:40:45 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2024/11/22 10:51:54 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static int	do_fork(t_data *data, int *tube, int i, char **envp)
 
 	pid = fork();
 	if (pid < 0)
-		return (ft_err("Pipex:ft_process.c:35:fork()", -1));
+		return (ft_err("Pipex:ft_process_bonus.c:35:fork()", -1));
 	if (pid == 0)
 	{
 		redirect_fd(data, tube, i);
 		execve(ft_get_path(data->cmd[i][0], data->path), data->cmd[i], envp);
-		ft_free_all(&data, tube);
-		ft_printf_err("Pipex:ft_process.c:41:execve()", 1);
+		ft_free_all(data, tube);
+		ft_printf_err("Pipex:ft_process_bonus.c:41:execve()", 1);
 		exit(127);
 	}
 	close(tube[1]);
@@ -68,19 +68,19 @@ int	ft_process_fork(t_data *data, char **envp)
 	{
 		if (pipe(tube) < 0)
 		{
-			ft_free_all(&data, NULL);
-			return (ft_err("Pipex:ft_process.c:69:pipe()", -1));
+			ft_free_all(data, NULL);
+			return (ft_err("Pipex:ft_process_bonus.c:69:pipe()", -1));
 		}
 		if (do_fork(data, tube, i, envp) == -1)
 		{
-			ft_free_all(&data, tube);
-			return (ft_err("Pipex:ft_process.c:74:do_fork()", -1));
+			ft_free_all(data, tube);
+			return (ft_err("Pipex:ft_process_bonus.c:74:do_fork()", -1));
 		}
 		ft_pipe_swap(tube, &(data->prev_tube), 0);
 	}
 	ft_pipe_swap(tube, &(data->prev_tube), 1);
 	while (wait(NULL) > 0)
 		;
-	ft_free_all(&data, tube);
+	ft_free_all(data, tube);
 	return (0);
 }

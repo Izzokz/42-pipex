@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_readlines.c                                     :+:      :+:    :+:   */
+/*   ft_rlines_dup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 15:01:58 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2024/11/15 15:01:59 by kzhen-cl         ###   ########.fr       */
+/*   Created: 2024/11/23 19:07:52 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2024/11/23 19:07:55 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../gnlxio.h"
 
-char	**ft_readlines(int fd)
+char	**ft_rlines_dup(char **rlines)
 {
-	char	**lines;
-	char	*line;
+	char	**new_lines;
+	int		len;
 	int		i;
 
-	lines = gnlxio_ft_calloc(2, sizeof(char *));
-	if (!lines)
-		return (NULL);
-	line = get_next_line(fd);
-	i = -1;
-	while (line)
+	len = ft_rlines_len(rlines);
+	new_lines = gnlxio_ft_calloc(len + 1, sizeof(char *));
+	if (!new_lines)
 	{
-		lines[++i] = gnlxio_ft_strdup(line);
-		ft_realloc_rlines(&lines, 1);
-		if (invalid_rlines_free(&lines) == -1)
+		perror("GNLXIO:ft_rlines_dup.c:22:gnlxio_ft_calloc()");
+		return (NULL);
+	}
+	i = -1;
+	while (rlines[++i])
+	{
+		new_lines[i] = gnlxio_ft_strdup(rlines[i]);
+		if (!new_lines[i])
 		{
-			perror("GNLXIO:ft_readlines.c:29:ft_realloc_rlines()");
+			perror("GNLXIO:ft_rlines_dup.c:31:gnlxio_ft_calloc()");
+			ft_free_rlines(&new_lines);
 			return (NULL);
 		}
-		free(line);
-		line = get_next_line(fd);
 	}
-	free(line);
-	return (lines);
+	return (new_lines);
 }

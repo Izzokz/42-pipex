@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rewrite_file.c                                  :+:      :+:    :+:   */
+/*   gnlxio_ft_strcmp.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 13:10:09 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2024/11/16 13:25:41 by kzhen-cl         ###   ########.fr       */
+/*   Created: 2024/11/23 12:30:13 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2024/11/23 12:30:15 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../gnlxio.h"
 
-int	ft_rewrite_file(const char *filename, char **lines)
+int	gnlxio_ft_strcmp(char	*string1, char *string2)
 {
-	int	fd;
-	int	i;
+	int	index;
 
-	if (!filename)
-		return (-1);
-	fd = open(filename, O_WRONLY | O_TRUNC);
-	if (fd < 0)
+	index = 0;
+	while (string1[index] == string2[index])
 	{
-		perror("GNLXIO:ft_rewrite_file.c:29:open()");
-		return (-1);
+		if ((string1[index] == '\0' && string2[index] == '\0')
+			|| (string1[index] != string2[index]))
+			break ;
+		index++;
 	}
-	i = -1;
-	while (lines[++i])
-		gnlxio_ft_putstr_fd(lines[i], fd);
-	close(fd);
-	return (i);
+	return (string1[index] - string2[index]);
 }

@@ -25,16 +25,15 @@ Returns:
 */
 int	ft_printf_fd(const char *str, int fd, ...)
 {
-	t_params	*pa;
+	t_params	pa;
 
 	if (!str || fd < 0)
 		return (-1);
-	pa = ft_calloc(1, sizeof(t_params));
-	pa->str = str;
-	pa->fd = fd;
-	pa->i = -1;
-	va_start(pa->args, fd);
-	return (ft_process(pa));
+	pa.str = str;
+	pa.fd = fd;
+	pa.i = -1;
+	va_start(pa.args, fd);
+	return (ft_process(&pa));
 }
 
 /*
@@ -49,16 +48,15 @@ Returns:
 */
 int	ft_printf(const char *str, ...)
 {
-	t_params	*pa;
+	t_params	pa;
 
 	if (!str)
 		return (-1);
-	pa = ft_calloc(1, sizeof(t_params));
-	pa->str = str;
-	pa->fd = 1;
-	pa->i = -1;
-	va_start(pa->args, str);
-	return (ft_process(pa));
+	pa.str = str;
+	pa.fd = 1;
+	pa.i = -1;
+	va_start(pa.args, str);
+	return (ft_process(&pa));
 }
 
 static int	ft_strerr(int errid, int fd)
@@ -90,25 +88,21 @@ Examples:
 */
 int	ft_printf_err(const char *msg, int fd, ...)
 {
-	t_params	*pa;
+	t_params	pa;
 	int			len;
 
-	pa = ft_calloc(1, sizeof(t_params));
-	pa->str = msg;
-	pa->fd = fd;
-	pa->i = -1;
-	va_start(pa->args, fd);
+	pa.str = msg;
+	pa.fd = fd;
+	pa.i = -1;
+	va_start(pa.args, fd);
 	len = 0;
 	if (msg)
 	{
-		len += ft_process(pa);
+		len += ft_process(&pa);
 		len += write(fd, ": ", 2);
 	}
 	else
-	{
-		va_end(pa->args);
-		free(pa);
-	}
+		va_end(pa.args);
 	len += ft_strerr(errno, fd);
 	return (len);
 }
