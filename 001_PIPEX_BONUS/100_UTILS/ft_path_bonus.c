@@ -21,6 +21,9 @@ char	*ft_get_path(char *filename, char **all_path)
 	i = -1;
 	if (!all_path)
 		return (NULL);
+	if (filename[0] == '/')
+		if (access(filename, X_OK) != -1)
+			return (ft_strdup(filename));
 	while (all_path[++i])
 	{
 		path = ft_strjoin(all_path[i], filename);
