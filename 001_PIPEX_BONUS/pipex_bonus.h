@@ -32,9 +32,10 @@ typedef struct s_data
 
 int		ft_err(char *msg, int value);
 int		ft_process_fork(t_data *data, char **envp);
+char	*ft_env_var(char *var, char **envp);
 void	ft_realloc(char **buffer, unsigned int ext);
 char	*ft_get_path(char *filename, char **all_path);
 int		ft_free_all(t_data *data, int fd[2]);
-int		ft_parse_args(int argc, char **argv, t_data *data);
+int		ft_parse_args(int argc, char **argv, char **envp, t_data *data);
 
 #endif

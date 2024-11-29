@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	if (!ft_parse_args(argc, argv, &data))
+	if (!ft_parse_args(argc, argv, envp, &data))
 	{
 		ft_free_all(&data, NULL);
 		return (-1);

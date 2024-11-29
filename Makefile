@@ -19,7 +19,8 @@ MAINSRCBONUS = $(MAINDIRBONUS)ft_process_bonus.c \
 UTILSSRCBONUS = $(UTILDIRBONUS)ft_err_bonus.c \
 	$(UTILDIRBONUS)ft_realloc_bonus.c \
 	$(UTILDIRBONUS)ft_path_bonus.c \
-	$(UTILDIRBONUS)ft_free_all_bonus.c
+	$(UTILDIRBONUS)ft_free_all_bonus.c \
+	$(UTILDIRBONUS)ft_env_var_bonus.c
 
 LIB = 010_FT_PRINTF/libftprintf.a 020_LIBFT/libft.a
 
@@ -29,8 +30,9 @@ OBJBONUS = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRCBONUS) $(UTILSSRCBONUS)
 
 CCA = cc -Wall -Werror -Wextra -g3
 
-all: $(NAME)
+MAKEFLAGS += --no-print-directory
 
+all: $(NAME)
 
 bonus: $(OBJDIR) $(OBJBONUS)
 	$(MAKE) -C 010_FT_PRINTF/
