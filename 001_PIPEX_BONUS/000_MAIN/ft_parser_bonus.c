@@ -18,6 +18,8 @@ static int	ft_parse_cmds(int argc, char **argv, t_data *data)
 	int		j;
 
 	i = 1;
+	if (data->here_doc)
+		i += 1;
 	j = -1;
 	while (++i < argc - 1)
 	{

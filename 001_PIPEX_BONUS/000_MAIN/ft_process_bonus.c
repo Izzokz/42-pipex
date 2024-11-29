@@ -31,6 +31,7 @@ static void	redirect_fd(t_data *data, int *tube, int i)
 static int	do_fork(t_data *data, int *tube, int i, char **envp)
 {
 	int	pid;
+	char	*path;
 
 	pid = fork();
 	if (pid < 0)
@@ -38,7 +39,9 @@ static int	do_fork(t_data *data, int *tube, int i, char **envp)
 	if (pid == 0)
 	{
 		redirect_fd(data, tube, i);
-		execve(ft_get_path(data->cmd[i][0], data->path), data->cmd[i], envp);
+		path = ft_get_path(data->cmd[i][0], data->path);
+		execve(path, data->cmd[i], envp);
+		free(path);
 		ft_free_all(data, tube);
 		ft_printf_err("Pipex:ft_process_bonus.c:41:execve()", 1);
 		exit(127);
