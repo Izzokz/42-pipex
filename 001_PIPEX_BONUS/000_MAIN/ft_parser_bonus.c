@@ -82,7 +82,10 @@ int	ft_parse_args(int argc, char **argv, char **envp, t_data *data)
 	data->fd[0] = ft_get_fd0(argv, envp, data);
 	if (data->fd[0] < 0)
 		ft_err("Pipex:ft_parser_bonus.c:62:ft_get_fd0()", 0);
-	data->fd[1] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
+	if (data->here_doc)
+		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_APPEND);
+	else
+		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
 	if (data->fd[1] < 0)
 		ft_err("Pipex:ft_parser_bonus.c:65:open()", 0);
 	data->cmd = ft_calloc(argc - 2, sizeof(char **));
