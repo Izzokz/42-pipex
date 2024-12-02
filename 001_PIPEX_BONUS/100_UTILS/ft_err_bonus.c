@@ -12,8 +12,10 @@
 
 #include "../pipex_bonus.h"
 
-int	ft_err(char *msg, int value)
+int	ft_err(char *msg, int value, t_data *data)
 {
 	ft_printf_err("%s", 1, msg);
+	if (data)
+		ft_free_all(data, NULL);
 	return (value);
 }

@@ -65,6 +65,7 @@ static int	ft_strerr(int errid, int fd)
 	char	*line;
 
 	line = ft_get_line("/var/tmp/.errmsg", errid + 1);
+	ft_rline_cutendl(&line);
 	len = ft_printf_fd("%s\n", fd, line);
 	free(line);
 	line = NULL;

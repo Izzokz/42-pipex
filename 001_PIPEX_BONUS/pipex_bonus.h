@@ -30,7 +30,7 @@ typedef struct s_data
 	char	**path;
 }	t_data;
 
-int		ft_err(char *msg, int value);
+int		ft_err(char *msg, int value, t_data *data);
 int		ft_process_fork(t_data *data, char **envp);
 char	*ft_env_var(char *var, char **envp);
 void	ft_realloc(char **buffer, unsigned int ext);

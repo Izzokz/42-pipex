@@ -16,18 +16,18 @@ static void	ft_close_all(t_data *data, int fd[2])
 {
 	if (data->fd)
 	{
-		if (data->fd[0])
+		if (data->fd[0] > 2)
 			close(data->fd[0]);
-		if (data->fd[1])
+		if (data->fd[1] > 2)
 			close(data->fd[1]);
 		free(data->fd);
 		data->fd = NULL;
 	}
 	if (fd)
 	{
-		if (fd[0])
+		if (fd[0] > 2)
 			close(fd[0]);
-		if (fd[1])
+		if (fd[1] > 2)
 			close(fd[1]);
 	}
 	return ;

@@ -35,7 +35,7 @@ static int	do_fork(t_data *data, int *tube, int i, char **envp)
 
 	pid = fork();
 	if (pid < 0)
-		return (ft_err("Pipex:ft_process_bonus.c:36:fork()", -1));
+		return (ft_err("Pipex:ft_process_bonus.c:36:fork()", -1, NULL));
 	if (pid == 0)
 	{
 		redirect_fd(data, tube, i);
@@ -70,14 +70,11 @@ int	ft_process_fork(t_data *data, char **envp)
 	while (data->cmd[++i])
 	{
 		if (pipe(tube) < 0)
-		{
-			ft_free_all(data, NULL);
-			return (ft_err("Pipex:ft_process_bonus.c:72:pipe()", -1));
-		}
+			return (ft_err("Pipex:ft_process_bonus.c:72:pipe()", -1, data));
 		if (do_fork(data, tube, i, envp) == -1)
 		{
 			ft_free_all(data, tube);
-			return (ft_err("Pipex:ft_process_bonus.c:77:do_fork", -1));
+			return (ft_err("Pipex:ft_process_bonus.c:77:do_fork", -1, NULL));
 		}
 		ft_pipe_swap(tube, &(data->prev_tube), 0);
 	}

@@ -45,11 +45,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	if (!ft_parse_args(argc, argv, envp, &data))
+	if (argc < 5)
 	{
-		ft_free_all(&data, NULL);
-		return (-1);
+		ft_printf("Error: %d arguments given.\n", argc - 1);
+		ft_printf("At least 4 arguments are expected.");
+		return (0);
 	}
+	data.cmd = NULL;
+	data.fd = NULL;
+	data.path = NULL;
+	data.here_doc = gnlxio_ft_strcmp(argv[1], "here_doc") == 0;
+	if (!ft_parse_args(argc, argv, envp, &data))
+		return (-1);
 	ft_set_path(&data, envp);
 	if (ft_process_fork(&data, envp) == -1)
 		return (-1);

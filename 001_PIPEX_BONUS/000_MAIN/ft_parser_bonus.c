@@ -49,11 +49,10 @@ static int	ft_get_fd0(char **argv, char **envp, t_data *data)
 {
 	char	*input;
 
-	data->here_doc = gnlxio_ft_strcmp(argv[1], "here_doc") == 0;
 	if (data->here_doc)
 	{
 		if (ft_gen_file(".here_doc", "0744") == -1)
-			ft_err("Pipex:ft_parser_bonus.c:38:ft_gen_file()", -1);
+			ft_err("Pipex:ft_parser_bonus.c:55:ft_gen_file()", -1, NULL);
 		while (1)
 		{
 			ft_printf("here_doc > ");
@@ -74,21 +73,25 @@ static int	ft_get_fd0(char **argv, char **envp, t_data *data)
 
 int	ft_parse_args(int argc, char **argv, char **envp, t_data *data)
 {
-	if (argc < 5)
+	if (argc - 2 - data->here_doc < 3)
+	{
+		ft_printf("Error: After some calculations, something is missing\n");
 		return (0);
+	}
 	data->fd = ft_calloc(3, sizeof(int));
 	if (!data->fd)
 		return (ft_free_all(data, NULL));
 	data->fd[0] = ft_get_fd0(argv, envp, data);
 	if (data->fd[0] < 0)
-		ft_err("Pipex:ft_parser_bonus.c:62:ft_get_fd0()", 0);
+		return (ft_err("Pipex:ft_parser_bonus.c:82:ft_get_fd0()", 0, data));
+	ft_gen_file(argv[argc - 1], "0777");
 	if (data->here_doc)
 		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_APPEND);
 	else
 		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
 	if (data->fd[1] < 0)
-		ft_err("Pipex:ft_parser_bonus.c:65:open()", 0);
-	data->cmd = ft_calloc(argc - 2, sizeof(char **));
+		return (ft_err("Pipex:ft_parser_bonus.c:87||89:open()", 0, data));
+	data->cmd = ft_calloc(argc - 2 - data->here_doc, sizeof(char **));
 	if (!(data->cmd))
 		return (ft_free_all(data, NULL));
 	if (!ft_parse_cmds(argc, argv, data))

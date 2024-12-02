@@ -6,7 +6,7 @@
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:12:50 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2024/10/31 10:12:51 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:09:35 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ static void	ft_set_path(t_data *data, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	*data;
+	t_data	data;
 
-	data = NULL;
-	if (argc != 5 || !ft_parse_args(argc, argv, &data))
+	data.cmd = NULL;
+	data.fd = NULL;
+	data.path = NULL;
+	if (!ft_parse_args(argc, argv, &data))
 		return (-1);
-	ft_set_path(data, envp);
-	if (ft_process_fork(data, envp) == -1)
+	ft_set_path(&data, envp);
+	if (ft_process_fork(&data, envp) == -1)
 		return (-1);
 	return (0);
 }

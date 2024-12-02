@@ -6,7 +6,7 @@
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:40:44 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2024/11/08 09:40:45 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:09:30 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@ static void	redirect_fd(t_data *data, int *tube, int i)
 
 static int	do_fork(t_data *data, int *tube, int i, char **envp)
 {
-	int	pid;
+	int		pid;
+	char	*path;
 
 	pid = fork();
 	if (pid < 0)
-		return (ft_err("Pipex:ft_process.c:35:fork()", -1));
+		return (ft_err("Pipex:ft_process.c:36:fork()", -1, NULL));
 	if (pid == 0)
 	{
 		redirect_fd(data, tube, i);
-		execve(ft_get_path(data->cmd[i][0], data->path), data->cmd[i], envp);
-		ft_free_all(&data, tube);
-		ft_printf_err("Pipex:ft_process.c:41:execve()", 1);
+		path = ft_get_path(data->cmd[i][0], data->path);
+		if (path)
+			execve(path, data->cmd[i], envp);
+		free(path);
+		ft_free_all(data, tube);
 		exit(127);
 	}
 	close(tube[1]);
@@ -67,20 +70,17 @@ int	ft_process_fork(t_data *data, char **envp)
 	while (data->cmd[++i])
 	{
 		if (pipe(tube) < 0)
-		{
-			ft_free_all(&data, NULL);
-			return (ft_err("Pipex:ft_process.c:69:pipe()", -1));
-		}
+			return (ft_err("Pipex:ft_process.c:72:pipe()", -1, data));
 		if (do_fork(data, tube, i, envp) == -1)
 		{
-			ft_free_all(&data, tube);
-			return (ft_err("Pipex:ft_process.c:74:do_fork()", -1));
+			ft_free_all(data, tube);
+			return (ft_err("Pipex:ft_process.c:77:do_fork", -1, NULL));
 		}
 		ft_pipe_swap(tube, &(data->prev_tube), 0);
 	}
 	ft_pipe_swap(tube, &(data->prev_tube), 1);
 	while (wait(NULL) > 0)
 		;
-	ft_free_all(&data, tube);
+	ft_free_all(data, tube);
 	return (0);
 }
