@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 5)
 	{
 		ft_printf("Error: %d arguments given.\n", argc - 1);
-		ft_printf("At least 4 arguments are expected.");
+		ft_printf("At least 4 arguments are expected.\n");
 		return (0);
 	}
 	data.cmd = NULL;

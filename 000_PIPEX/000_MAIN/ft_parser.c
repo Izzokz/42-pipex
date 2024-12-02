@@ -33,7 +33,7 @@ int	ft_parse_args(int argc, char **argv, t_data *data)
 	if (argc != 5)
 	{
 		ft_printf("Error: %d arguments given while 4 are expected.", argc - 1);
-		ft_printf("\nPlease, enter one infile, two commands and one outfile");
+		ft_printf("\nPlease, enter 1 infile, 2 commands and 1 outfile.\n");
 		return (0);
 	}
 	data->fd = ft_calloc(3, sizeof(int));
