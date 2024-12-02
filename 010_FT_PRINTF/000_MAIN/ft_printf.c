@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
+#include "../errmsg.h"
 
 /*
 Parameters:
@@ -61,15 +62,7 @@ int	ft_printf(const char *str, ...)
 
 static int	ft_strerr(int errid, int fd)
 {
-	int		len;
-	char	*line;
-
-	line = ft_get_line("/var/tmp/.errmsg", errid + 1);
-	ft_rline_cutendl(&line);
-	len = ft_printf_fd("%s\n", fd, line);
-	free(line);
-	line = NULL;
-	return (len);
+	return (ft_printf_fd("%s\n", fd, g_errmsg[errid]));
 }
 
 /*

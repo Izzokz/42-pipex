@@ -63,7 +63,6 @@ MAKEFLAGS += --no-print-directory
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@cp 100_UTILS/.errmsg /var/tmp/
 	@ar x $(GNLXIO)
 	@ar rc $(NAME) $(OBJ) *.o
 	@rm -f *.o
