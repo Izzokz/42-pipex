@@ -69,8 +69,9 @@ $(NAME): $(OBJ)
 	@rm -f *.o
 	@printf "\n\033[31m\033[1mft_printf: \033[1;97mBuild Complete !\033[0m\n"
 
-test: $(NAME) $(TESTMAINO)
-	$(CCA) -o $(TEST) $(TESTMAINO) $(NAME)
+test: $(TESTMAINO) $(NAME)
+	@$(CCA) -o $(TEST) $(TESTMAINO) $(NAME)
+	@printf "\033[31m\033[1mft_printf: \033[1;37mTEST: OK !\033[0m\n"
 
 $(GNLXIO):
 	@$(MAKE) -C 010_GNLXIO/
@@ -97,7 +98,6 @@ $(OBJDIR)%.o: $(ARRAYDIR)%.c | $(OBJDIR)
 
 $(TESTMAINO): $(TESTMAIN)
 	@$(CCA) -o $@ -c $<
-	@printf "\n\033[31m\033[1mft_printf: \033[1;37mMain Compiled !\033[0m\n"
 
 clean:
 	@$(MAKE) clean -C 010_GNLXIO/
@@ -106,7 +106,7 @@ clean:
 
 fclean:
 	@$(MAKE) fclean -C 010_GNLXIO/
-	@rm -f $(OBJ) $(TESMAINO) $(NAME) $(TEST)
+	@rm -f $(TEST) $(OBJ) $(TESMAINO) $(NAME)
 	@printf "\033[31m\033[1mft_printf: \033[1;37mCleaned !\033[0m\n"
 
 re: fclean all
