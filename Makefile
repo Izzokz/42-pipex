@@ -15,7 +15,8 @@ UTILSSRC = $(UTILDIR)ft_err.c \
 
 MAINSRCBONUS = $(MAINDIRBONUS)ft_process_bonus.c \
 	$(MAINDIRBONUS)ft_parser_bonus.c \
-	$(MAINDIRBONUS)main_bonus.c
+	$(MAINDIRBONUS)main_bonus.c \
+	$(MAINDIRBONUS)ft_process_hd_bonus.c
 UTILSSRCBONUS = $(UTILDIRBONUS)ft_err_bonus.c \
 	$(UTILDIRBONUS)ft_realloc_bonus.c \
 	$(UTILDIRBONUS)ft_path_bonus.c \

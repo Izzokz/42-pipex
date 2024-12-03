@@ -30,21 +30,6 @@ static int	ft_parse_cmds(int argc, char **argv, t_data *data)
 	return (1);
 }
 
-static void	get_var(char **input, char **envp)
-{
-	char	*temp;
-
-	temp = ft_env_var((*input) + 1, envp);
-	free(*input);
-	if (!temp)
-		(*input) = ft_strdup("");
-	else
-	{
-		(*input) = ft_strdup(temp);
-		free(temp);
-	}
-}
-
 static int	ft_get_fd0(char **argv, char **envp, t_data *data)
 {
 	char	*input;
@@ -52,16 +37,14 @@ static int	ft_get_fd0(char **argv, char **envp, t_data *data)
 	if (data->here_doc)
 	{
 		if (ft_gen_file(".here_doc", "0744") == -1)
-			ft_err("Pipex:ft_parser_bonus.c:54:ft_gen_file()", -1, NULL);
+			ft_err("Pipex:ft_parser_bonus.c:39:ft_gen_file()", -1, NULL);
 		while (1)
 		{
 			ft_printf("here_doc > ");
 			input = ft_input();
 			if (!input || gnlxio_ft_strcmp(input, argv[2]) == 0)
 				break ;
-			else if (ft_strlen(input) > 1 && input[0] == '$')
-				get_var(&input, envp);
-			ft_add_line(".here_doc", input, A_END);
+			ft_process_hd(input, envp);
 			free(input);
 			input = NULL;
 		}
@@ -83,14 +66,14 @@ int	ft_parse_args(int argc, char **argv, char **envp, t_data *data)
 		return (ft_free_all(data, NULL));
 	data->fd[0] = ft_get_fd0(argv, envp, data);
 	if (data->fd[0] < 0)
-		return (ft_err("Pipex:ft_parser_bonus.c:84:ft_get_fd0()", 0, data));
+		return (ft_err("Pipex:ft_parser_bonus.c:67:ft_get_fd0()", 0, data));
 	ft_gen_file(argv[argc - 1], "0777");
 	if (data->here_doc)
 		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_APPEND);
 	else
 		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
 	if (data->fd[1] < 0)
-		return (ft_err("Pipex:ft_parser_bonus.c:89||91:open()", 0, data));
+		return (ft_err("Pipex:ft_parser_bonus.c:72||74:open()", 0, data));
 	data->cmd = ft_calloc(argc - 2 - data->here_doc, sizeof(char **));
 	if (!(data->cmd))
 		return (ft_free_all(data, NULL));
