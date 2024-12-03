@@ -28,7 +28,7 @@ typedef struct s_data
 int		ft_err(char *msg, int value, t_data *data);
 int		ft_process_fork(t_data *data, char **envp);
 char	*ft_env_var(char *var, char **envp);
-void	ft_process_hd(char *input, char **envp);
+void	ft_process_hd(char *line, char **envp);
 void	ft_realloc(char **buffer, unsigned int ext);
 char	*ft_get_path(char *filename, char **all_path);
 int		ft_free_all(t_data *data, int fd[2]);
