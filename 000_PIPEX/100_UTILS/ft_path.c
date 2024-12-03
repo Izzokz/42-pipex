@@ -33,5 +33,6 @@ char	*ft_get_path(char *filename, char **all_path)
 			return (path);
 		free(path);
 	}
+	ft_printf_err("Pipex:%s (access=%_1)", 1, filename, 0);
 	return (NULL);
 }

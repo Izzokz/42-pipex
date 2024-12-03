@@ -33,13 +33,13 @@ static int	do_fork(t_data *data, int *tube, int i, char **envp)
 	int		pid;
 	char	*path;
 
+	path = ft_get_path(data->cmd[i][0], data->path);
 	pid = fork();
 	if (pid < 0)
-		return (ft_err("Pipex:ft_process.c:36:fork()", -1, NULL));
+		return (ft_err("Pipex:ft_process.c:37:fork()", -1, NULL));
 	if (pid == 0)
 	{
 		redirect_fd(data, tube, i);
-		path = ft_get_path(data->cmd[i][0], data->path);
 		if (path)
 			execve(path, data->cmd[i], envp);
 		free(path);
@@ -47,6 +47,7 @@ static int	do_fork(t_data *data, int *tube, int i, char **envp)
 		exit(127);
 	}
 	close(tube[1]);
+	free(path);
 	return (0);
 }
 
@@ -70,11 +71,11 @@ int	ft_process_fork(t_data *data, char **envp)
 	while (data->cmd[++i])
 	{
 		if (pipe(tube) < 0)
-			return (ft_err("Pipex:ft_process.c:72:pipe()", -1, data));
+			return (ft_err("Pipex:ft_process.c:73:pipe()", -1, data));
 		if (do_fork(data, tube, i, envp) == -1)
 		{
 			ft_free_all(data, tube);
-			return (ft_err("Pipex:ft_process.c:77:do_fork", -1, NULL));
+			return (ft_err("Pipex:ft_process.c:75:do_fork", -1, NULL));
 		}
 		ft_pipe_swap(tube, &(data->prev_tube), 0);
 	}

@@ -52,7 +52,7 @@ static int	ft_get_fd0(char **argv, char **envp, t_data *data)
 	if (data->here_doc)
 	{
 		if (ft_gen_file(".here_doc", "0744") == -1)
-			ft_err("Pipex:ft_parser_bonus.c:55:ft_gen_file()", -1, NULL);
+			ft_err("Pipex:ft_parser_bonus.c:54:ft_gen_file()", -1, NULL);
 		while (1)
 		{
 			ft_printf("here_doc > ");
@@ -83,14 +83,14 @@ int	ft_parse_args(int argc, char **argv, char **envp, t_data *data)
 		return (ft_free_all(data, NULL));
 	data->fd[0] = ft_get_fd0(argv, envp, data);
 	if (data->fd[0] < 0)
-		return (ft_err("Pipex:ft_parser_bonus.c:82:ft_get_fd0()", 0, data));
+		return (ft_err("Pipex:ft_parser_bonus.c:84:ft_get_fd0()", 0, data));
 	ft_gen_file(argv[argc - 1], "0777");
 	if (data->here_doc)
 		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_APPEND);
 	else
 		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
 	if (data->fd[1] < 0)
-		return (ft_err("Pipex:ft_parser_bonus.c:87||89:open()", 0, data));
+		return (ft_err("Pipex:ft_parser_bonus.c:89||91:open()", 0, data));
 	data->cmd = ft_calloc(argc - 2 - data->here_doc, sizeof(char **));
 	if (!(data->cmd))
 		return (ft_free_all(data, NULL));
