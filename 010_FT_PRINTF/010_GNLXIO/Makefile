@@ -12,7 +12,8 @@ MAINSRC = $(MAINDIR)get_next_line.c \
 	$(MAINDIR)ft_replace.c \
 	$(MAINDIR)ft_input.c \
 	$(MAINDIR)ft_gen_file.c \
-	$(MAINDIR)ft_add_line.c
+	$(MAINDIR)ft_add_line.c \
+	$(MAINDIR)ft_split_file.c
 UTILSSRC = $(UTILDIR)gnlxio_ft_strdup.c \
 	$(UTILDIR)gnlxio_ft_putstr_fd.c \
 	$(UTILDIR)get_next_line_utils.c \
@@ -24,13 +25,18 @@ UTILSSRC = $(UTILDIR)gnlxio_ft_strdup.c \
 	$(UTILDIR)ft_rlines_dup.c \
 	$(UTILDIR)ft_rlines_cutendl.c \
 	$(UTILDIR)invalid_rlines.c \
+	$(UTILDIR)invalid_slines.c \
 	$(UTILDIR)ft_trunc.c \
-	$(UTILDIR)ft_realloc_rlines.c
+	$(UTILDIR)ft_realloc_rlines.c \
+	$(UTILDIR)ft_split_rlines.c \
+	$(UTILDIR)gnlxio_ft_split.c \
+	$(UTILDIR)in_rlines.c
 
 OBJDIR = 666_OBJ/
 OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(UTILSSRC)))
+DEP = $(patsubst %.c,$(OBJDIR)%.d,$(notdir $(MAINSRC) $(UTILSSRC)))
 
-CCA = cc -Wall -Wextra -Werror -g3
+CCA = cc -Wall -Wextra -Werror -g3 -MP -MMD
 
 TOTAL_FILES = $(words $(OBJ))
 PROGRESS = 0
@@ -57,6 +63,8 @@ define PRINT_PROGRESS
 	done; \
 	printf "\033[1;32m +] \033[34m$$PERCENT%%\033[0m\r"
 endef
+
+MAKEFLAGS += --no-print-directory
 
 all: $(NAME)
 
@@ -85,6 +93,9 @@ fclean:
 	@rm -f $(OBJ) $(NAME)
 	@printf "\033[36m\033[1mGNLXIO: \033[37mCleaned !\033[0m\n"
 
-re: fclean all
+re: fclean
+	@$(MAKE)
 
 .PHONY: all clean fclean re
+
+-include $(DEP)

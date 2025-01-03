@@ -12,18 +12,33 @@
 
 #include "../gnlxio.h"
 
-void	ft_free_rlines(char ***lines)
+void	*ft_free_rlines(t_rlines *rlines)
 {
 	int	i;
 
-	if (!lines || !(*lines))
-		return ;
+	if (!rlines || !(*rlines))
+		return (NULL);
 	i = -1;
-	while ((*lines)[++i])
+	while ((*rlines)[++i])
 	{
-		free((*lines)[i]);
-		(*lines)[i] = NULL;
+		free((*rlines)[i]);
+		(*rlines)[i] = NULL;
 	}
-	free(*lines);
-	*lines = NULL;
+	free(*rlines);
+	*rlines = NULL;
+	return (NULL);
+}
+
+void	*ft_free_slines(t_slines *slines)
+{
+	int	i;
+
+	if (!slines || !(*slines))
+		return (NULL);
+	i = -1;
+	while ((*slines)[++i])
+		ft_free_rlines(&(*slines)[i]);
+	free(*slines);
+	*slines = NULL;
+	return (NULL);
 }

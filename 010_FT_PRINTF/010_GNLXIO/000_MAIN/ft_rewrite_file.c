@@ -12,7 +12,7 @@
 
 #include "../gnlxio.h"
 
-int	ft_rewrite_file(const char *filename, char **lines)
+int	ft_rewrite_file(const char *filename, t_rlines lines)
 {
 	int	fd;
 	int	i;
@@ -22,7 +22,7 @@ int	ft_rewrite_file(const char *filename, char **lines)
 	fd = open(filename, O_WRONLY | O_TRUNC);
 	if (fd < 0)
 	{
-		perror("GNLXIO:ft_rewrite_file.c:29:open()");
+		perror("GNLXIO:ft_rewrite_file.c:22:open()");
 		return (-1);
 	}
 	i = -1;

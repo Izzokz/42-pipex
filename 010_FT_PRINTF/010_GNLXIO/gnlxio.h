@@ -44,38 +44,58 @@
 #  define A_END -1
 # endif
 
-void	ft_fix_lineno(int *lineno, int len);
-void	gnlxio_ft_putstr_fd(char *s, int fd);
-int		gnlxio_ft_strcmp(char *string1, char *string2);
-char	*gnlxio_ft_strnstr(const char *big, const char *little, size_t len);
-size_t	gnlxio_ft_strlen(const char *s);
-char	*gnlxio_ft_strdup(const char *src);
-void	*gnlxio_ft_calloc(size_t nmemb, size_t size);
-char	*gnlxio_ft_strjoinfree(char **s1, char **s2);
-char	**ft_rlines_dup(char **rlines);
-void	ft_realloc_rlines(char ***rlines, int nmemb);
-int		ft_rlines_len(char **rlines);
-int		ft_rlines_size(char **rlines);
-int		ft_file_len(const char *filename);
-int		ft_file_size(const char *filename);
-int		zombie_rlines(char **rlines);
-int		invalid_rlines(char **rlines);
-int		zombie_rlines_free(char ***rlines);
-int		invalid_rlines_free(char ***rlines);
-void	ft_rline_cutendl(char **rline);
-void	ft_rlines_cutendl(char ***rlines);
-char	*get_next_line(int fd);
-char	**ft_readlines(int fd);
-char	**ft_readfile(const char *filename);
-void	ft_free_rlines(char ***lines);
-int		ft_rewrite_file(const char *filename, char **lines);
-int		ft_deline(const char *filename, int lineno);
-char	*ft_get_line(const char *filename, int lineno);
-int		ft_replace_rlines(char ***rlines, char *from, char *to);
-int		ft_replace_file(const char *filename, char *from, char *to);
-int		ft_gen_file(char *filename, char *perm);
-int		ft_trunc(char *filename);
-int		ft_add_line(char *filename, char *line, long long method);
-char	*ft_input(void);
+/*Read lines*/
+typedef char**	t_rlines;
+
+/*SUPER LINES... Or just split rlines*/
+typedef char***	t_slines;
+
+void		ft_fix_lineno(int *lineno, int len);
+void		gnlxio_ft_putstr_fd(char *s, int fd);
+int			gnlxio_ft_strcmp(char *string1, char *string2);
+char		*gnlxio_ft_strnstr(const char *big, const char *little, size_t len);
+size_t		gnlxio_ft_strlen(const char *s);
+char		*gnlxio_ft_strdup(const char *src);
+void		*gnlxio_ft_calloc(size_t nmemb, size_t size);
+char		*gnlxio_ft_strjoinfree(char **s1, char **s2);
+char		**gnlxio_ft_split(char *line, char *sep);
+t_slines	ft_split_rlines(t_rlines rlines, char *sep);
+t_rlines	ft_rlines_dup(t_rlines rlines);
+void		ft_realloc_rlines(t_rlines *rlines, int nmemb);
+void		ft_realloc_slines(t_slines *slines, int nmemb);
+int			ft_rlines_len(t_rlines rlines);
+int			ft_rlines_size(t_rlines rlines);
+int			ft_file_len(const char *filename);
+int			ft_file_size(const char *filename);
+int			zombie_rlines(t_rlines rlines);
+int			invalid_rlines(t_rlines rlines);
+int			zombie_rlines_free(t_rlines *rlines);
+int			invalid_rlines_free(t_rlines *rlines);
+int			zombie_slines(t_slines slines);
+int			invalid_slines(t_slines slines);
+int			zombie_slines_free(t_slines *slines);
+int			invalid_slines_free(t_slines *slines);
+int			in_rlines(char *line, t_rlines rlines);
+int			in_slines(char *line, t_slines slines);
+int			in_file(char *line, const char *filename);
+void		ft_rline_cutendl(char **rline);
+void		ft_rlines_cutendl(t_rlines *rlines);
+void		ft_slines_cutendl(t_slines *slines);
+char		*get_next_line(int fd);
+t_rlines	ft_readlines(int fd);
+t_rlines	ft_readfile(const char *filename);
+t_slines	ft_readfile_split(const char *filename, char *sep);
+int			ft_split_file(const char *filename, char *sep);
+void		*ft_free_rlines(t_rlines *rlines);
+void		*ft_free_slines(t_slines *slines);
+int			ft_rewrite_file(const char *filename, t_rlines lines);
+int			ft_deline(const char *filename, int lineno);
+char		*ft_get_line(const char *filename, int lineno);
+int			ft_replace_rlines(t_rlines *rlines, char *from, char *to);
+int			ft_replace_file(const char *filename, char *from, char *to);
+int			ft_gen_file(char *filename, char *perm);
+int			ft_trunc(char *filename);
+int			ft_add_line(char *filename, char *line, long long method);
+char		*ft_input(void);
 
 #endif

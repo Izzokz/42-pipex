@@ -24,9 +24,10 @@ ARRAYSRC = $(ARRAYDIR)ft_write_all.c \
 
 OBJDIR = 666_OBJ/
 OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(UTILSSRC) $(WRITESRC) $(ARRAYSRC)))
+DEP = $(patsubst %.c,$(OBJDIR)%.d,$(notdir $(MAINSRC) $(UTILSSRC) $(WRITESRC) $(ARRAYSRC)))
 GNLXIO = 010_GNLXIO/gnlxio.a
 
-CCA = cc -Wall -Wextra -Werror -g3
+CCA = cc -Wall -Wextra -Werror -g3 -MP -MMD
 
 TEST = ft_printf.test
 TESTMAIN = main.c
@@ -108,6 +109,9 @@ fclean:
 	@rm -f $(TEST) $(OBJ) $(TESMAINO) $(NAME)
 	@printf "\033[31m\033[1mft_printf: \033[1;37mCleaned !\033[0m\n"
 
-re: fclean all
+re: fclean
+	@$(MAKE)
 
 .PHONY: all clean fclean re test
+
+-include $(DEP)

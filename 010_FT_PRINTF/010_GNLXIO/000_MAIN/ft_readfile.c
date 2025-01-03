@@ -12,10 +12,10 @@
 
 #include "../gnlxio.h"
 
-char	**ft_readfile(const char *filename)
+t_rlines	ft_readfile(const char *filename)
 {
-	char	**lines;
-	int		fd;
+	t_rlines	lines;
+	int			fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -26,4 +26,17 @@ char	**ft_readfile(const char *filename)
 	lines = ft_readlines(fd);
 	close(fd);
 	return (lines);
+}
+
+t_slines	ft_readfile_split(const char *filename, char *sep)
+{
+	t_slines	slines;
+	t_rlines	rlines;
+
+	rlines = ft_readfile(filename);
+	if (!rlines)
+		return (NULL);
+	slines = ft_split_rlines(rlines, sep);
+	ft_free_rlines(&rlines);
+	return (slines);
 }
