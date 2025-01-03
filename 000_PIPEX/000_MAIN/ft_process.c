@@ -23,7 +23,7 @@ static void	redirect_fd(t_data *data, int *tube, int i)
 		dup2(data->fd[1], 1);
 	else
 		dup2(tube[1], 1);
-	ft_free_all(NULL, tube);
+	close(tube[0]);
 	if (data->prev_tube != -1)
 		close (data->prev_tube);
 }
@@ -46,19 +46,18 @@ static int	do_fork(t_data *data, int *tube, int i, char **envp)
 		ft_free_all(data, tube);
 		exit(127);
 	}
-	close(tube[1]);
 	free(path);
 	return (0);
 }
 
 static void	ft_pipe_swap(int tube[2], int *prev_tube, int terminate)
 {
+	close(tube[1]);
 	if (*prev_tube != -1)
 		close(*prev_tube);
 	if (terminate)
 		return ;
 	*prev_tube = tube[0];
-	close(tube[1]);
 }
 
 int	ft_process_fork(t_data *data, char **envp)
