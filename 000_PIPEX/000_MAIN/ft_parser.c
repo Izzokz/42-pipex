@@ -41,7 +41,7 @@ int	ft_parse_args(int argc, char **argv, t_data *data)
 		return (ft_free_all(data, NULL));
 	data->fd[0] = open(argv[1], O_RDONLY);
 	if (data->fd[0] < 0)
-		return (ft_err("Pipex:ft_parser.c:42:open()", 0, data));
+		ft_printf_err("Pipex:ft_parser.c:42:open()", 1);
 	ft_gen_file(argv[argc - 1], "0777");
 	data->fd[1] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
 	if (data->fd[1] < 0)

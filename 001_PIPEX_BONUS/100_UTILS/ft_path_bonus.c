@@ -12,6 +12,17 @@
 
 #include "../pipex_bonus.h"
 
+static char	*get_in_dir(char *filename)
+{
+	char	*path;
+
+	path = ft_calloc(1000, sizeof(char));
+	getcwd(path, 1000);
+	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup("/")});
+	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(filename)});
+	return (path);
+}
+
 char	*ft_get_path(char *filename, char **all_path)
 {
 	int		i;
@@ -33,6 +44,9 @@ char	*ft_get_path(char *filename, char **all_path)
 			return (path);
 		free(path);
 	}
-	ft_printf_err("Pipex:%s (access=%_1)", 1, filename, 0);
+	if (ft_strlen(filename) > 1 && filename[0] == '.' && filename[1] == '/'
+		&& access(filename, X_OK) != -1)
+		return (get_in_dir(filename));
+	ft_printf("Pipex:%s(access=%_1)\n", filename, 0);
 	return (NULL);
 }

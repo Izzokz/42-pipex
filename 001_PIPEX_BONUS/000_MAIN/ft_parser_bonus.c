@@ -66,7 +66,7 @@ int	ft_parse_args(int argc, char **argv, char **envp, t_data *data)
 		return (ft_free_all(data, NULL));
 	data->fd[0] = ft_get_fd0(argv, envp, data);
 	if (data->fd[0] < 0)
-		return (ft_err("Pipex:ft_parser_bonus.c:67:ft_get_fd0()", 0, data));
+		ft_printf_err("Pipex:ft_parser_bonus.c:67:ft_get_fd0()", 1);
 	ft_gen_file(argv[argc - 1], "0777");
 	if (data->here_doc)
 		data->fd[1] = open(argv[argc - 1], O_WRONLY | O_APPEND);
