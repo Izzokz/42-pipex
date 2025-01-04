@@ -40,7 +40,7 @@ static int	do_fork(t_data *data, int *tube, int i, char **envp)
 	if (pid == 0)
 	{
 		redirect_fd(data, tube, i);
-		if (path)
+		if (path && (i != 0 || data->fd[0] != -1))
 			execve(path, data->cmd[i], envp);
 		free(path);
 		ft_free_all(data, tube);
