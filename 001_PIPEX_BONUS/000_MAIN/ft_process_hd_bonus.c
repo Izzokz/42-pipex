@@ -46,7 +46,6 @@ static void	ft_resplit_write(char *word, int fd, char **envp)
 		get_var(&(resplit[i]), envp);
 		ft_printf_fd("%s", fd, resplit[i]);
 	}
-	ft_printf_fd(" ", fd);
 	ft_free_rlines(&resplit);
 }
 
