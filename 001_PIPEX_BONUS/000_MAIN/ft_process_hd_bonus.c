@@ -27,11 +27,32 @@ static void	get_var(char **input, char **envp)
 	}
 }
 
-static void	ft_resplit_write(char *word, int fd, char **envp)
+static void	ft_remap(char **line, char *split, int fd)
+{
+	int	i;
+
+	i = -1;
+	if (!split)
+	{
+		while ((*line)[++i])
+			if ((*line)[i] == ' ')
+				ft_printf_fd(" ", fd);
+		return ;
+	}
+	while (ft_strncmp(((*line) + ++i), split, ft_strlen(split)))
+	{
+		if ((*line)[i] == ' ')
+			ft_printf_fd(" ", fd);
+		(*line)[i] = '0';
+	}
+}
+
+static void	ft_resplit_write(char **line, char *word, int fd, char **envp)
 {
 	char	**resplit;
 	int		i;
 
+	ft_remap(line, word, fd);
 	resplit = ft_split(word, '$');
 	if (!resplit)
 	{
@@ -69,7 +90,8 @@ void	ft_process_hd(char *line, char **envp)
 	}
 	ints.i = -1;
 	while (split[++(ints.i)])
-		ft_resplit_write(split[ints.i], ints.fd, envp);
+		ft_resplit_write(&line, split[ints.i], ints.fd, envp);
+	ft_remap(&line, NULL, ints.fd);
 	ft_printf_fd("\n", ints.fd);
 	ft_free_rlines(&split);
 	close(ints.fd);
