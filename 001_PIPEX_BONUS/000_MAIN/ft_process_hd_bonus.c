@@ -56,7 +56,7 @@ static void	ft_resplit_write(char **line, char *word, int fd, char **envp)
 	resplit = ft_split(word, '$');
 	if (!resplit)
 	{
-		ft_printf_err("Pipex:ft_process_hd_bonus.c:35:ft_split()", 1);
+		ft_printf_err("Pipex:ft_process_hd_bonus.c:65:ft_split()", 1);
 		return ;
 	}
 	i = -1;
@@ -78,13 +78,13 @@ void	ft_process_hd(char *line, char **envp)
 	ints.fd = open(".here_doc", O_WRONLY | O_APPEND);
 	if (ints.fd < 0)
 	{
-		ft_printf_err("Pipex:ft_process_hd_bonus.c:58:open()", 1);
+		ft_printf_err("Pipex:ft_process_hd_bonus.c:81:open()", 1);
 		return ;
 	}
 	split = ft_split(line, ' ');
 	if (!split)
 	{
-		ft_printf_err("Pipex:ft_process_hd_bonus.c:64:ft_split()", 1);
+		ft_printf_err("Pipex:ft_process_hd_bonus.c:84:ft_split()", 1);
 		close(ints.fd);
 		return ;
 	}
